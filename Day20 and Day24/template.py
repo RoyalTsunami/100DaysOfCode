@@ -31,13 +31,26 @@ class Scoreboard(Turtle):
         self.penup()
         self.goto(0, screen.screensize()[1] - BOX_SIZE)
 
-    def update_scoreboard(self, score):
+    def update_scoreboard(self, score, highscore):
         self.clear()
-        self.write(arg=f"Current Score: {score}", align="left", font=FONT_SCORE)
+        self.write(
+            arg=f"Current Score: {score}   High Score:{highscore}",
+            align="left",
+            font=FONT_SCORE,
+        )
 
-    def game_over(self, score):
+    def game_over(self, score, highscore):
         self.clear()
         self.goto(screen.screensize()[1] / 2, screen.screensize()[1] / 2)
-        self.write(
-            arg=f"Game Over! Final Score: {score}", align="center", font=FONT_OVER
-        )
+        if score > highscore:
+            self.write(
+                arg=f"Game Over! Final Score: {score}\nNew High Score: {score}",
+                align="center",
+                font=FONT_OVER,
+            )
+        else:
+            self.write(
+                arg=f"Game Over! Final Score: {score}\nHigh Score: {highscore}",
+                align="center",
+                font=FONT_OVER,
+            )

@@ -8,9 +8,12 @@ from dimensions import BOX_SIZE, S_LENGTH
 
 game_running = False
 screen = Screen()
+with open("Day20 and Day24\highscore.txt", mode="r") as high_score_file:
+    highscore = int(high_score_file.read())
 
 
 def play_game():
+    global highscore
     global game_running
 
     # Screen
@@ -42,7 +45,7 @@ def play_game():
 
     # Game run
     while game_running:
-        scoreboard.update_scoreboard(score)
+        scoreboard.update_scoreboard(score, highscore=highscore)
         screen.update()
         time.sleep(0.1)
 
@@ -63,13 +66,15 @@ def play_game():
             or snake.head.ycor() < 0
         ):
             game_running = False
-            scoreboard.game_over(score=score)
+            scoreboard.game_over(score=score, highscore=highscore)
+            if score > highscore:
+                highscore = score
 
         # Collision with snake
         for snake_part in snake.part[1:]:
             if snake.head.distance(snake_part) < 15:
                 game_running = False
-                scoreboard.game_over(score=score)
+                scoreboard.game_over(score=score, highscore=highscore)
 
 
 while game_running == False:
@@ -79,6 +84,8 @@ while game_running == False:
         game_running = True
         play_game()
     elif play == "no" or play == None:
+        with open("Day20 and Day24\highscore.txt", mode="w") as high_score_file:
+            high_score_file.write(f"{highscore}")
         break
     else:
         pass
