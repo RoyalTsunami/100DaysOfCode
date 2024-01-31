@@ -34,7 +34,7 @@ class Scoreboard(Turtle):
     def update_scoreboard(self, score, highscore):
         self.clear()
         self.write(
-            arg=f"Current Score: {score}   High Score:{highscore}",
+            arg=f"Current Score: {score}   High Score: {highscore}",
             align="left",
             font=FONT_SCORE,
         )
